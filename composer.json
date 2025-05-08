@@ -1,7 +1,8 @@
 {
-  "name": "anirudhsingh/sparkphp",
+  "name": "violentanirudh/sparkphp",
   "description": "SparkPHP: Code with glee, build apps easily and free.",
   "type": "library",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "SparkPHP\\": "sparkphp/"
@@ -9,6 +10,13 @@
   },
   "bin": [
     "bin/sparkphp"
+  ],
+  "keywords": ["framework", "php", "microframework", "sparkphp"],
+  "authors": [
+    {
+      "name": "Anirudh Singh",
+      "email": "violentanirudh@gmail.com"
+    }
   ],
   "require": {}
 }
