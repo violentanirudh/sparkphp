@@ -8,7 +8,7 @@ class Response {
 
     // Constructor: initialize view and flash handler
     public function __construct($viewPath = null) {
-        $this->view = new Views(dirname(__DIR__) . '/' . ($viewPath ?: 'views/'));
+        $this->view = new Views(($viewPath ?: dirname(__DIR__) . '/' . 'views/'));
         $this->session_flash = new Flash();
     }
 

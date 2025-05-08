@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'SparkPHP\\' => array($baseDir . '/sparkphp'),
+    'App\\' => array($baseDir . '/controllers'),
 );

@@ -4,12 +4,16 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb980f0bd22ffca145a238418caaecf2d
+class ComposerStaticInit03ad2d4d88c178a317c2a49f6282b4fa
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
             'SparkPHP\\' => 9,
+        ),
+        'A' => 
+        array (
+            'App\\' => 4,
         ),
     );
 
@@ -17,6 +21,10 @@ class ComposerStaticInitb980f0bd22ffca145a238418caaecf2d
         'SparkPHP\\' => 
         array (
             0 => __DIR__ . '/../..' . '/sparkphp',
+        ),
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/controllers',
         ),
     );
 
@@ -27,9 +35,9 @@ class ComposerStaticInitb980f0bd22ffca145a238418caaecf2d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb980f0bd22ffca145a238418caaecf2d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb980f0bd22ffca145a238418caaecf2d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitb980f0bd22ffca145a238418caaecf2d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit03ad2d4d88c178a317c2a49f6282b4fa::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit03ad2d4d88c178a317c2a49f6282b4fa::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit03ad2d4d88c178a317c2a49f6282b4fa::$classMap;
 
         }, null, ClassLoader::class);
     }

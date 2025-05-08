@@ -6,9 +6,7 @@ use SparkPHP\App;
 
 $app = new App();
 
-include './config.php';
-
-$app -> add('GET', '/', function($request, $response) {
+$app -> add('GET', '/', function ($request, $response) {
 	return $response -> render('home');
 });
 
