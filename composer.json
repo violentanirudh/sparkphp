@@ -1,0 +1,14 @@
+{
+  "name": "anirudhsingh/sparkphp",
+  "description": "SparkPHP: Code with glee, build apps easily and free.",
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "SparkPHP\\": "sparkphp/"
+    }
+  },
+  "bin": [
+    "bin/sparkphp"
+  ],
+  "require": {}
+}
