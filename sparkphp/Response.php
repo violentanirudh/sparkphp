@@ -7,8 +7,8 @@ class Response {
     protected $session_flash;  // Flash message handler
 
     // Constructor: initialize view and flash handler
-    public function __construct($viewPath = null) {
-        $this->view = new Views(($viewPath ?: dirname(__DIR__) . '/' . 'views/'));
+    public function __construct($viewPath = null, $config = []) {
+        $this->view = new Views(($viewPath ?: dirname(__DIR__) . '/' . 'views/'), $config);
         $this->session_flash = new Flash();
     }
 

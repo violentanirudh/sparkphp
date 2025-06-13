@@ -26,7 +26,7 @@ class JWT
     }
 
     public static function verify($jwt, $secret_key) {
-        $parts = explode('.', $jwt);
+        $parts = explode('.', $jwt ?? '');
         if (count($parts) !== 3) return false;
         list($header_b64, $payload_b64, $signature_b64) = $parts;
         $signature = self::base64url_decode($signature_b64);

@@ -7,16 +7,15 @@ class Router {
     private $routes = [];         // Registered routes
     private $middlewares = [];    // Global middlewares
     private $current_path = '';   // Current group path prefix
-    private $views_folder = '';   // Path to views folder
-
+    private $response;
     // Register a global middleware
     public function use($middleware) {
         $this->middlewares[] = $middleware;
     }
 
     // Set the views folder path
-    public function views($path) {
-        $this->views_folder = $path;
+    public function views($path, $config = []) {
+        $this -> response = new Response($path, $config);
     }
 
     // Group routes under a common prefix
@@ -40,8 +39,7 @@ class Router {
     public function run() {
         $req_path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         $req_method = $_SERVER['REQUEST_METHOD'];
-        $response = new Response($this->views_folder);
-
+        $response = $this -> response;
 
         foreach ($this->routes as $route_info) {
             [$method, $path, $callback, $route_middlewares] = $route_info;

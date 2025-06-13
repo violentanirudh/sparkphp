@@ -15,6 +15,7 @@ class App
     protected $auth;
     protected $jwt_secret;
     protected $error_handler;
+    protected $config_path;
 
     // Constructor: starts session and initializes router and error handler
     public function __construct()
@@ -35,7 +36,7 @@ class App
     // Set views folder for the router
     public function views($folder) 
     {
-        $this->router->views($folder);
+        $this->router->views($folder, $this -> config);
     }
 
     // Add middleware to the router
@@ -118,4 +119,61 @@ class App
         }
         return $this->auth;
     }
+
+    public function load_config($path)
+    {
+
+        $this -> config_path = $path;
+
+        if (file_exists($path)) {
+            // Read and decode the JSON config file
+            $config = json_decode(file_get_contents($path), true);
+            
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception('Invalid JSON in config file');
+            }
+
+            // Set each config item
+            if (is_array($config)) {
+                foreach ($config as $key => $value) {
+                    $this->set_config($key, $value);
+                }
+            }
+        } else {
+            throw new \Exception('Config file not found');
+        }
+    }
+
+    public function change_config($newConfig)
+    {
+        if (!file_exists($this -> config_path)) {
+            return false;
+        }
+
+        $config = json_decode(file_get_contents($this -> config_path), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return false;
+        }
+
+        foreach ($newConfig as $key => $value) {
+            if (array_key_exists($key, $config)) {
+                $config[$key] = $value;
+            }
+        }
+
+        $content = json_encode($config, JSON_PRETTY_PRINT);
+
+        if ($content === false) {
+            return false;
+        }
+
+        if (file_put_contents($this -> config_path, $content) === false) {
+            return false;
+        }
+
+        return true;
+    }
+
+
 }

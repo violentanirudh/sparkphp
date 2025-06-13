@@ -59,7 +59,7 @@ class Auth
     public function validate($token)
     {
         $payload = JWT::verify($token, $this->jwt_secret);
-        if (!$payload || ($payload['exp'] ?? 0) < time()) return false;
+        if (!$payload || ($payload['expire'] ?? 0) < time()) return false;
         return $payload;
     }
 

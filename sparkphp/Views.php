@@ -9,9 +9,10 @@ class Views
     private $shared = []; // Shared variables for all views
 
     // Constructor: set base path for views
-    public function __construct($basePath)
+    public function __construct($basePath, $shared = [])
     {
         $this->basePath = rtrim($basePath, '/\\') . DIRECTORY_SEPARATOR;
+        $this->shared = $shared;
     }
 
     // Share a variable with all views
@@ -23,24 +24,26 @@ class Views
     // Render a view file with provided data
     public function render($filename, $data = [])
     {
+        $filename = str_replace('.php', '', $filename);
         $file = $this->basePath . $filename . '.php';
         if (!file_exists($file)) {
             http_response_code(500);
             echo "View not found: $filename";
             exit;
         }
-        // Merge shared and local data
+
+        // Merge shared, local, and flash data
         $vars = array_merge($this->shared, $data);
         $flash = new Flash();
-        $vars = array_merge($vars, [ 'flash' => $flash ]);
+        $vars['flash'] = $flash;
 
-        // Helper to load partials inside views
-        $load = function($partial, $data = []) {
-            return $this->load($partial, $data);
+        // Make $load available as a callable inside views AND partials
+        $vars['load'] = function($partial, $data = []) {
+            return $this->load($partial, array_merge($this->shared, $data));
         };
 
-        extract($vars, EXTR_SKIP); // Extract variables for use in view
-        include $file;             // Include the view file
+        extract($vars, EXTR_SKIP);
+        include $file;
     }
 
     // Load a partial view file
@@ -51,8 +54,17 @@ class Views
             echo "<!-- Partial not found: $filename -->";
             return;
         }
+
+        // Merge shared + local data
         $vars = array_merge($this->shared, $data);
+
+        // Include $load helper here too!
+        $vars['load'] = function($partial, $data = []) {
+            return $this->load($partial, array_merge($this->shared, $data));
+        };
+
         extract($vars, EXTR_SKIP);
         include $file;
     }
+
 }
