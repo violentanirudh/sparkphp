@@ -5,10 +5,10 @@ namespace SparkPHP;
 // File handling class
 class File
 {
-    protected $root = '/'; // Root directory for file operations
+    public $root = '/'; // Root directory for file operations
 
     // Upload a file to the specified relative path
-    public function upload($file, $relativePath, $update = false)
+    public function upload($file, $relativePath, $name = null, $update = false)
     {
         // Check if file is provided and uploaded without errors
         if (!isset($file) || $file['error'] !== UPLOAD_ERR_OK) {
@@ -23,7 +23,7 @@ class File
             mkdir($dir, 0755, true);
         }
 
-        $filename = basename($file['name']);
+        $filename = $name ?? basename($file['name']);
         $targetFile = $dir . '/' . $filename;
 
         // If not updating, avoid overwriting existing files by renaming
